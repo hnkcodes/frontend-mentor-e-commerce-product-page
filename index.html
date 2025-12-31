@@ -35,7 +35,8 @@
   </head>
   <body >
     <header>
-      <nav class="navbar">
+      <nav class="navbar container">
+        <div class="nav-left">
         <img src="images/logo.svg" alt="sneakers logo" />
         <ul class="navbar-list">
           <li><a href="#">Collections</a></li>
@@ -44,6 +45,7 @@
           <li><a href="#">About</a></li>
           <li><a href="#">Contact</a></li>
         </ul>
+        </div>
         <ul class="navbar-icons">
           <li>
             <button id="cart-button">
@@ -52,35 +54,35 @@
               ></span>
             </button>
           </li>
-          <li><img src="images/image-avatar.png" alt="user face icon" /></li>
+          <li><img class="face-icon" src="images/image-avatar.png" alt="user face icon" /></li>
         </ul>
       </nav>
     </header>
 
-    <main class="main main-wrapper">
+    <main class="main main-wrapper container">
       <div class="image-wrapper">
         <div class="main-image-wrapper ">
           <img
             class="main-image show-dialog"
-            data-img-id="product-1"
+            data-index="1"
             src="images/image-product-1.jpg"
             alt="shoes product image"
           />
           <img
             class="main-image inactive show-dialog"
-            data-img-id="product-2"
+            data-index="2"
             src="images/image-product-2.jpg"
             alt="shoes product image"
           />
           <img
             class="main-image inactive show-dialog"
-            data-img-id="product-3"
+            data-index="3"
             src="images/image-product-3.jpg"
             alt="shoes product image"
           />
           <img
             class="main-image inactive show-dialog"
-            data-img-id="product-4"
+            data-index="4"
             src="images/image-product-4.jpg"
             alt="shoes product image"
           />
@@ -89,7 +91,7 @@
           <li>
             <img
               class="thumb-nail focused"
-              id="product-1"
+              data-index="1"
               src="images/image-product-1-thumbnail.jpg"
               alt=""
             />
@@ -97,7 +99,7 @@
           <li>
             <img
               class="thumb-nail"
-              id="product-2"
+              data-index="2"
               src="images/image-product-2-thumbnail.jpg"
               alt=""
             />
@@ -105,7 +107,7 @@
           <li>
             <img
               class="thumb-nail"
-              id="product-3"
+              data-index="3"
               src="images/image-product-3-thumbnail.jpg"
               alt=""
             />
@@ -113,7 +115,7 @@
           <li>
             <img
               class="thumb-nail"
-              id="product-4"
+              data-index="4"
               src="images/image-product-4-thumbnail.jpg"
               alt=""
             />
@@ -157,11 +159,13 @@
     </main>
 
     <div class="cart-popup inactive">
+     
       <h3>Cart</h3>
-      <div>
-        <p class="empty">Your Cart is Empty</p>
+      <div class="empty">
+        <p>Your Cart is Empty</p>
       </div>
       <div class="not-empty inactive">
+       <div class="not-empty-content">
         <img
           src="images/image-product-1-thumbnail.jpg"
           alt=""
@@ -174,9 +178,10 @@
         <button id="dismiss-items-button">
           <img src="images/icon-delete.svg" alt="trash can" />
         </button>
-      </div>
-      <div class="checkout-button-wrapper">
-        <button id="checkout-button">Checkout</button>
+        </div>
+        <div class="checkout-button-wrapper">
+          <button id="checkout-button">Checkout</button>
+        </div>
       </div>
     </div>
   
@@ -184,44 +189,44 @@
     <dialog class="modal">
       <button id="close-dialog"><img src="images/icon-close.svg" alt="close icon"></button>
       <div class="modal-main-wrapper">
-     <button><img src="images/icon-previous.svg" alt="icon previous" class="modal-img-button" id="previous-button"></button>
+     <button id="previous-button"><img src="images/icon-previous.svg" alt="icon previous" class="modal-img-button" ></button>
 
-      <div class="image-wrapper">
+    
         <div class="main-image-wrapper">
           <img
             class="main-image show-dialog"
-            data-img-id="product-1"
+            data-index="1"
             src="images/image-product-1.jpg"
             alt="shoes product image"
           />
           <img
             class="main-image inactive show-dialog"
-            data-img-id="product-2"
+            data-index="2"
             src="images/image-product-2.jpg"
             alt="shoes product image"
           />
           <img
             class="main-image inactive show-dialog"
-            data-img-id="product-3"
+            data-index="3"
             src="images/image-product-3.jpg"
             alt="shoes product image"
           />
           <img
             class="main-image inactive show-dialog"
-            data-img-id="product-4"
+            data-index="4"
             src="images/image-product-4.jpg"
             alt="shoes product image"
           />
-        </div>
+    
           </div>
         
-         <button><img id="next-button" class="modal-img-button"src="images/icon-next.svg" alt="icon next"></button>
+         <button id="next-button" ><img class="modal-img-button"src="images/icon-next.svg" alt="icon next"></button>
         </div>
         <ul class="thumbnail-list">
           <li>
             <img
               class="thumb-nail focused"
-              id="product-1"
+              data-index="1"
               src="images/image-product-1-thumbnail.jpg"
               alt=""
             />
@@ -229,7 +234,7 @@
           <li>
             <img
               class="thumb-nail"
-              id="product-2"
+              data-index="2"
               src="images/image-product-2-thumbnail.jpg"
               alt=""
             />
@@ -237,7 +242,7 @@
           <li>
             <img
               class="thumb-nail"
-              id="product-3"
+              data-index="3"
               src="images/image-product-3-thumbnail.jpg"
               alt=""
             />
@@ -245,7 +250,7 @@
           <li>
             <img
               class="thumb-nail"
-              id="product-4"
+              data-index="4"
               src="images/image-product-4-thumbnail.jpg"
               alt=""
             />
@@ -264,7 +269,7 @@
       Challenge by
       <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
         >Frontend Mentor</a
-      >. Coded by <a href="#">Your Name Here</a>.
+      >. Coded by <a href="#">hnk</a>.
     </div>
 
     <script src="index.js"></script>

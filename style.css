@@ -15,12 +15,28 @@
   font-family: "Kumbh Sans", sans-serif;
 }
 
+body {
+  margin: 0;
+}
+
+.container {
+  max-width: 1100px; /* ← ここが全体幅の基準 */
+  margin: 0 auto;
+  padding: 0 2rem; /* 画面端の余白 */
+}
+
 /* navbae */
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--grayishBlue);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
 }
 
 .navbar-list {
@@ -56,6 +72,11 @@
 .navbar-icons img {
   width: 2rem;
   height: 2rem;
+}
+
+.face-icon:hover {
+  border-radius: 50%;
+  border: 0.2rem solid var(--orange);
 }
 
 #cart-button {
@@ -98,6 +119,7 @@
 .image-wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .content-wrapper {
@@ -127,6 +149,10 @@
   border-radius: 1rem;
   width: 4rem;
   height: 4rem;
+}
+
+.thumbnail-list img:hover {
+  opacity: 60%;
 }
 
 /* content */
@@ -252,7 +278,7 @@
   color: var(--darkGrayishBlue);
 }
 
-.not-empty {
+.not-empty-content {
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -306,12 +332,35 @@
 
 /* style for modal */
 
-.modal-main-wrapper {
-  display: flex;
-  align-content: center;
-}
-
 #close-dialog {
   background: none;
   border: none;
+}
+
+#previous-button,
+#next-button {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+#previous-button,
+#next-button,
+#close-dialog:hover {
+  cursor: pointer;
+}
+
+.modal-main-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.thumbnail-list {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+
+  padding: 0;
+  margin-top: 1.5rem;
 }

@@ -1,6 +1,7 @@
 let itemNumber = 0;
 let cartNumber = 0;
-let currentIndex = 1;
+let mainImgIndex = 1;
+let modalImgIndex;
 const totalImgNum = 4;
 
 const plusButton = document.getElementById("plus-button");
@@ -26,51 +27,6 @@ const closeDialog = document.getElementById("close-dialog");
 const nextBtn = document.getElementById("next-button");
 console.log(nextBtn);
 const prevBtn = document.getElementById("previous-button");
-
-function setupGallery(root) {
-  const thumbNails = root.querySelectorAll(".thumb-nail");
-  const mainImageWrapper = root.querySelector(".main-image-wrapper");
-
-  thumbNails.forEach((thumbNail) =>
-    thumbNail.addEventListener("click", (e) => {
-      thumbNails.forEach((t) => t.classList.remove("focused"));
-      thumbNail.classList.add("focused");
-
-      const imageId = e.target.id;
-      const target = mainImageWrapper.querySelector(
-        `[data-img-id="${imageId}"]`
-      );
-
-      mainImageWrapper
-        .querySelectorAll(".main-image")
-        .forEach((img) => img.classList.add("inactive"));
-      target.classList.remove("inactive");
-    })
-  );
-}
-
-function toggleMainImage(root, targetId) {
-  const target = root
-    .querySelector(".main-image-wrapper")
-    .querySelector(targetId);
-
-  root
-    .querySelector(".main-image-wrapper")
-    .querySelectorAll(".main-image")
-    .forEach((img) => img.classList.add("inactive"));
-  target.classList.remove("inactive");
-}
-
-function toggleThumbnailFocus(root, targetId) {
-  const thumbNailTarget = root
-    .querySelector(".thumbnail-list")
-    .querySelector(targetId);
-
-  root
-    .querySelectorAll(".thumb-nail")
-    .forEach((t) => t.classList.remove("focused"));
-  thumbNailTarget.classList.add("focused");
-}
 
 function renderCartUI() {
   if (cartNumber > 0) {
@@ -103,7 +59,6 @@ function hidePopup() {
 plusButton.addEventListener("click", () => {
   itemNumber = itemNumber + 1;
 
-  console.log(itemNumber);
   renderItemNumberUI();
   hidePopup();
 });
@@ -112,6 +67,7 @@ minusButton.addEventListener("click", () => {
   if (itemNumber <= 0) {
     return;
   }
+
   itemNumber = itemNumber - 1;
   renderItemNumberUI();
   hidePopup();
@@ -142,36 +98,6 @@ checkoutButton.addEventListener("click", () => {
   hidePopup();
 });
 
-setupGallery(mainRoot);
-setupGallery(modalRoot);
-
-showDialog.forEach((img) =>
-  img.addEventListener("click", (e) => {
-    dialog.showModal();
-
-    const imageId = e.target.dataset.imgId;
-
-    toggleThumbnailFocus(modalRoot, `#${imageId}`);
-    toggleMainImage(modalRoot, `[data-img-id="${imageId}"]`);
-  })
-);
-
-closeDialog.addEventListener("click", () => dialog.close());
-
-nextBtn.addEventListener("click", () => {
-  currentIndex = getNextIndex(currentIndex, totalImgNum);
-
-  toggleMainImage(modalRoot, `[data-img-id="product-${currentIndex}"]`);
-  toggleThumbnailFocus(modalRoot, `#product-${currentIndex}`);
-});
-
-prevBtn.addEventListener("click", () => {
-  currentIndex = getPrevIndex(currentIndex, totalImgNum);
-
-  toggleMainImage(modalRoot, `[data-img-id="product-${currentIndex}"]`);
-  toggleThumbnailFocus(modalRoot, `#product-${currentIndex}`);
-});
-
 function getNextIndex(currentIndex, total) {
   if (currentIndex === total) {
     return 1;
@@ -185,3 +111,82 @@ function getPrevIndex(currentIndex, total) {
   }
   return currentIndex - 1;
 }
+
+function showModal() {
+  dialog.showModal();
+  renderImgUI(modalImgIndex, modalRoot);
+}
+
+function renderMainImgUI(currentIndex, root) {
+  const wrapper = root.querySelector(".main-image-wrapper");
+  wrapper
+    .querySelectorAll(".main-image")
+    .forEach((img) => img.classList.add("inactive"));
+
+  const target = wrapper.querySelector(`[data-index="${currentIndex}"]`);
+
+  if (!target) return;
+
+  target.classList.remove("inactive");
+}
+
+function renderThumbnailEffect(currentIndex, root) {
+  const list = root.querySelector(".thumbnail-list");
+
+  list
+    .querySelectorAll(".thumb-nail")
+    .forEach((img) => img.classList.remove("focused"));
+
+  const target = list.querySelector(`[data-index="${currentIndex}"]`);
+
+  if (!target) return;
+
+  target.classList.add("focused");
+}
+
+function renderImgUI(index, root) {
+  renderThumbnailEffect(index, root);
+  renderMainImgUI(index, root);
+}
+
+showDialog.forEach((img) =>
+  img.addEventListener("click", () => {
+    modalImgIndex = mainImgIndex;
+
+    showModal();
+  })
+);
+
+closeDialog.addEventListener("click", () => {
+  dialog.close();
+});
+
+prevBtn.addEventListener("click", () => {
+  modalImgIndex = getPrevIndex(modalImgIndex, totalImgNum);
+
+  renderImgUI(modalImgIndex, modalRoot);
+});
+
+nextBtn.addEventListener("click", () => {
+  modalImgIndex = getNextIndex(modalImgIndex, totalImgNum);
+
+  renderImgUI(modalImgIndex, modalRoot);
+});
+
+const modalThumbnail = modalRoot.querySelectorAll(".thumb-nail");
+modalThumbnail.forEach((t) =>
+  t.addEventListener("click", () => {
+    modalImgIndex = +t.dataset.index;
+
+    renderImgUI(modalImgIndex, modalRoot);
+  })
+);
+
+const mainThumbnail = mainRoot.querySelectorAll(".thumb-nail");
+mainThumbnail.forEach((t) =>
+  t.addEventListener("click", () => {
+    mainImgIndex = +t.dataset.index;
+
+    renderImgUI(mainImgIndex, mainRoot);
+  })
+);
